@@ -1,40 +1,36 @@
 package kafka
 
 import (
-    "github.com/confluentinc/confluent-kafka-go/kafka"
-    "log"
+	"log"
+
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 func StartConsumer(brokers string, groupID string, topics []string) {
-    config := &kafka.ConfigMap{
-        "bootstrap.servers": brokers,
-        "group.id":          groupID,
-        "auto.offset.reset": "earliest",
-        "enable.auto.commit": false,
-    }
+	config := &kafka.ConfigMap{
+		"bootstrap.servers":  brokers,
+		"group.id":           groupID,
+		"auto.offset.reset":  "earliest",
+		"enable.auto.commit": false,
+	}
 
-    consumer, err := kafka.NewConsumer(config)
-    if err != nil {
-        log.Fatalf("Failed to create consumer: %s", err)
-    }
+	consumer, err := kafka.NewConsumer(config)
+	if err != nil {
+		log.Fatalf("Failed to create consumer: %s", err)
+	}
 
-    consumer.SubscribeTopics(topics, nil)
+	consumer.SubscribeTopics(topics, nil)
 
-    for {
-        msg, err := consumer.ReadMessage(-1)
-        if err == nil {
-            // Process message
-            processMessage(msg)
-        } else {
-            // Handle error
-            log.Printf("Consumer error: %v (%v)\n", err, msg)
-            // Send to dead letter queue
-        }
-    }
+	for {
+		msg, err := consumer.ReadMessage(-1)
+		if err == nil {
+			processMessage(msg)
+		} else {
+			log.Printf("Consumer error: %v (%v)\n", err, msg)
+		}
+	}
 }
 
 func processMessage(msg *kafka.Message) {
-    // Implement message processing logic
-    log.Printf("Processing message: %s", string(msg.Value))
-    // Add error handling and retry logic if necessary
-} 
+	log.Printf("Processing message: %s", string(msg.Value))
+}

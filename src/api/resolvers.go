@@ -1,18 +1,16 @@
 package api
 
 import (
-	"context"
-	"time"
 	"github.com/graphql-go/graphql"
+	"github.com/pauly7610/uber_surge_prediction/src/models"
+	"github.com/pauly7610/uber_surge_prediction/src/services"
 )
 
 func resolveSurgeForecast(p graphql.ResolveParams) (interface{}, error) {
-	// Extract arguments
-	origin := p.Args["origin"].(Coordinates)
-	destination := p.Args["destination"].(Coordinates)
-	timeWindow := p.Args["timeWindow"].(TimeRange)
+	origin := p.Args["origin"].(models.Coordinates)
+	destination := p.Args["destination"].(models.Coordinates)
+	timeWindow := p.Args["timeWindow"].(models.TimeRange)
 
-	// Call prediction service
 	prediction, err := services.GetSurgePrediction(origin, destination, timeWindow)
 	if err != nil {
 		return nil, err
@@ -22,15 +20,13 @@ func resolveSurgeForecast(p graphql.ResolveParams) (interface{}, error) {
 }
 
 func resolveHistoricalSurge(p graphql.ResolveParams) (interface{}, error) {
-	// Extract arguments
-	location := p.Args["location"].(Coordinates)
-	timeRange := p.Args["timeRange"].(TimeRange)
+	location := p.Args["location"].(models.Coordinates)
+	timeRange := p.Args["timeRange"].(models.TimeRange)
 
-	// Query historical data
 	dataPoints, err := services.GetHistoricalSurgeData(location, timeRange)
 	if err != nil {
 		return nil, err
 	}
 
 	return dataPoints, nil
-} 
+}

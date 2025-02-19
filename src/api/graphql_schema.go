@@ -4,17 +4,39 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
+var CoordinatesType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "Coordinates",
+	Fields: graphql.Fields{
+		"lat": &graphql.Field{Type: graphql.Float},
+		"lon": &graphql.Field{Type: graphql.Float},
+	},
+})
+
+var TimeRangeType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "TimeRange",
+	Fields: graphql.Fields{
+		"start": &graphql.Field{Type: graphql.String},
+		"end":   &graphql.Field{Type: graphql.String},
+	},
+})
+
+var SurgeDataPointType = graphql.NewObject(graphql.ObjectConfig{
+	Name:   "SurgeDataPoint",
+	Fields: graphql.Fields{
+		// Define fields
+	},
+})
+
 var surgePredictionType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "SurgePrediction",
 	Fields: graphql.Fields{
-		"multiplier": &graphql.Field{Type: graphql.Float},
-		"confidence": &graphql.Field{Type: graphql.Float},
-		"validUntil": &graphql.Field{Type: graphql.DateTime},
+		"multiplier":        &graphql.Field{Type: graphql.Float},
+		"confidence":        &graphql.Field{Type: graphql.Float},
+		"validUntil":        &graphql.Field{Type: graphql.DateTime},
 		"optimumPickupTime": &graphql.Field{Type: graphql.DateTime},
 	},
 })
 
-// Define other types and schema
 var queryType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Query",
 	Fields: graphql.Fields{
@@ -46,4 +68,4 @@ var queryType = graphql.NewObject(graphql.ObjectConfig{
 			Resolve: resolveHistoricalSurge,
 		},
 	},
-}) 
+})
