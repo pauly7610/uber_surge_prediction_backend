@@ -1,0 +1,26 @@
+# Go
+bin/
+*.exe
+*.test
+*.out
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Node
+node_modules/
+
+# Misc
+.DS_Store 

@@ -1,0 +1,10 @@
+description: "Terminate a random instance in the surge pricing service"
+targetType: "Random"
+target: "aws:ec2:instance"
+impact: "Terminate"
+strategy:
+  type: "Random"
+  count: 1
+  filters:
+    - key: "tag:Service"
+      value: "surge-pricing" 

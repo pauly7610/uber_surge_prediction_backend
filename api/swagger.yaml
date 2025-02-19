@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: Surge Pricing API
+  version: 1.0.0
+paths:
+  /graphql:
+    post:
+      summary: Execute GraphQL queries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object 
